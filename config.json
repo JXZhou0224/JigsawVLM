@@ -1,0 +1,13 @@
+{
+  "save_dir": "result",
+  "data_cfg":{
+      "test_size": 50,
+      "batch_size": 5,
+      "draw_grid": true
+    },
+  "model_cfg":{
+    "generation_config":{
+      "max_new_tokens":512
+    }
+  }
+} 

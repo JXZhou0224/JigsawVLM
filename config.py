@@ -31,6 +31,14 @@ class DefaultConfig():
     @classmethod
     def to_json(cls, path):
         data = {k: v for k, v in cls.__dict__.items() if not k.startswith("__")}
+        data = {}
+        for k, v in cls.__dict__.items():
+            # skip private attributes, methods and descriptors
+            if k.startswith("__"):
+                continue
+            if isinstance(v, (classmethod, staticmethod)) or callable(v):
+                continue
+            data[k] = v
         with open(path, "w") as f:
             json.dump(data, f, indent=2)
 
