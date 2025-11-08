@@ -1,0 +1,41 @@
+data/patch_jigsaw_data/
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.egg
+*.egg-info/
+*.whl
+*.venv/
+venv/
+env/
+ENV/
+.idea/
+.vscode/
+
+# Jupyter
+.ipynb_checkpoints
+
+# Datasets / outputs
+*.pt
+*.pth
+*.ckpt
+*.h5
+*.npz
+*.zip
+*.tar.gz
+*.sqlite
+*.db
+*.log
+
+# Hugging Face cache
+cache/
+hf_data/
+*.jsonl
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
