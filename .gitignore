@@ -1,4 +1,4 @@
-data/patch_jigsaw_data/
+data/patch_jigsaw/
 # Python
 __pycache__/
 *.pyc
