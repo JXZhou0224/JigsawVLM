@@ -1,13 +1,14 @@
 {
-  "save_dir": "result",
+  "save_dir": "result/no_think_no_grid_50",
   "data_cfg":{
       "test_size": 50,
-      "batch_size": 5,
-      "draw_grid": true
+      "batch_size": 10,
+      "draw_grid": false,
+      "use_thinking": false
     },
   "model_cfg":{
     "generation_config":{
       "max_new_tokens":512
     }
   }
-} 
+}

@@ -6,13 +6,12 @@ from .BaseModel import BaseModel
 class Qwen2_5_VL(BaseModel):
     def __init__(self,model_name="Qwen/Qwen2.5-VL-3B-Instruct",generation_config={},quantization_config={},**kwargs):
         self.model_name = model_name
-
         self.model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
             model_name, 
             dtype="auto", 
             device_map="auto",
             generation_config= GenerationConfig(**generation_config),
-            quantization_config=BitsAndBytesConfig(**quantization_config),
+            quantization_config=BitsAndBytesConfig(**quantization_config) if quantization_config!={} else None,
             **kwargs
         )
         self.processor = AutoProcessor.from_pretrained(model_name)
