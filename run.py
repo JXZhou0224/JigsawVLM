@@ -84,7 +84,7 @@ if __name__ == "__main__":
     else:
         file:str = args.config
         assert file.endswith(".json"),"config must be a json, or select from existing configs"
-        config=CustomConfig.load_from_dict(json.load(file))
+        config=CustomConfig.load_from_dict(json.load(open(file,"r")))
     dataloader = None
     if config.dataloader_name == "JigsawR1":
         dataloader = JigsawR1(**config.data_cfg)
