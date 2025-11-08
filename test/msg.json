@@ -1,0 +1,12 @@
+[
+    {
+        "role": "user",
+        "content": [
+            {
+                "type": "image",
+                "image": "/home/jxzhou/CSE543/jigsaw_reason/example_out.png"
+            },
+            {"type": "text", "text": "image is shown above. The image above is a jigsaw, output whether the image is put togther correctly?"}
+        ]
+    }
+]
