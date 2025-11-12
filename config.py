@@ -16,11 +16,12 @@ class DefaultConfig():
         "dataset_path": "jigsaw-r1/coco",
         "test_size": 50,
         "batch_size": 1,
-        "draw_grid": True
+        "draw_grid": True,
+        "use_prompt": "default"
     }
-    use_prompt = "rearrange"
     dataloader_name = "JigsawR1"
     model_cfg = {
+        "model_class":"qwen2.5-vl",
         "model_name": "Qwen/Qwen2.5-VL-3B-Instruct",
         "generation_config":{
                 "max_new_tokens":256
@@ -51,6 +52,7 @@ class LocalConfig(DefaultConfig):
             "llm_int8_skip_modules": None,     # or list of modules to skip
         }
     }
+
 
 class CustomConfig(DefaultConfig):
     @classmethod

@@ -2,7 +2,8 @@ from transformers import Qwen2_5_VLForConditionalGeneration,AutoTokenizer, AutoP
 from transformers import GenerationConfig, BitsAndBytesConfig
 from qwen_vl_utils import process_vision_info
 from datasets import load_from_disk
-from .BaseModel import BaseModel
+from .BaseModel import BaseModel,ModelFactory
+@ModelFactory.register("qwen2.5-vl")
 class Qwen2_5_VL(BaseModel):
     def __init__(self,model_name="Qwen/Qwen2.5-VL-3B-Instruct",generation_config={},quantization_config={},**kwargs):
         self.model_name = model_name

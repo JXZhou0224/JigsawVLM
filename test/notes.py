@@ -1,6 +1,6 @@
 from transformers import Qwen2_5_VLForConditionalGeneration, AutoTokenizer, AutoProcessor
 from qwen_vl_utils import process_vision_info
-from utils import generate_bw_grid
+from JigsawVLM.utils.jigsaw_utils import generate_bw_grid
 import torch
 def qwen_pipeline():
     model = Qwen2_5_VLForConditionalGeneration.from_pretrained(

@@ -1,14 +1,26 @@
 {
-  "save_dir": "result/no_think_no_grid_50",
+  "save_dir": "result/test",
   "data_cfg":{
       "test_size": 50,
-      "batch_size": 10,
+      "batch_size": 5,
+
+      "use_prompt":"default",
+      "use_thinking": true,
+      "few_shot": false,
+      "use_tool": false,
+      "index_type": "1d",
+
+
+      "jigsaw_h": 2,
+      "jigsaw_w": 2,
       "draw_grid": false,
-      "use_thinking": false
+      "swap_mode": "random",
+
+      "view": false
     },
   "model_cfg":{
-    "generation_config":{
-      "max_new_tokens":512
-    }
+      "model_class": "openai",
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "temperature": 1.0
   }
 }

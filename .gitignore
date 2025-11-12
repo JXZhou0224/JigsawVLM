@@ -1,6 +1,8 @@
 data/patch_jigsaw/
 data/patch_jigsaw_data
+log
 result
+.github
 # Python
 __pycache__/
 *.pyc
