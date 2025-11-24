@@ -11,7 +11,7 @@ try:
     with open(results_file_path, "r") as f:
         for line in f:
             data = line.split(" ")
-            if len(data) == 2 and (data[0] == "True" or data[0] == "False"):
+            if len(data) == 2 and data[0] == "True":
                 total_count += 1
                 if data[1] == "True\n":
                     success_count += 1
