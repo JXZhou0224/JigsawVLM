@@ -168,7 +168,9 @@ class JigsawR1(BaseDataLoader):
         result = check_match(output, case["h"], case["w"], case["swap_log"])
         dic["checker_result"] = result
         dic["completion"] = completion
-        print("LLM Output:", completion)
+        if len(completion) < 100:
+            print("LLM Output:", completion)
+            print("Swap log:", case["swap_log"])
         print(dic["format_result"], dic["checker_result"])
         return dic
 
