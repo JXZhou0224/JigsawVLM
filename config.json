@@ -2,21 +2,17 @@
   "save_dir": "result/test",
   "data_cfg":{
       "test_size": 50,
-      "batch_size": 5,
-
-      "use_prompt":"default",
-      "use_thinking": true,
-      "few_shot": false,
-      "use_tool": false,
-      "index_type": "1d",
-
-
+      "batch_size": 1,
+      "draw_grid": false,
+      "image_scaling": 2
+    },
+  "task_cfg": {
+      "task_class": "classify_jigsaw",
       "jigsaw_h": 2,
       "jigsaw_w": 2,
-      "draw_grid": false,
-      "swap_mode": "random",
-
-      "view": false
+      "use_prompt": "thinking",
+      "use_thinking": true,
+      "use_tool": true
     },
   "model_cfg":{
       "model_class": "openai",

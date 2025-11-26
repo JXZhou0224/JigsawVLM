@@ -13,13 +13,23 @@ def deep_update(base, update):
 class DefaultConfig():
     save_dir = "result"
     data_cfg = {
-        "dataset_path": "jigsaw-r1/coco",
+        "data_class": "Jigsaw2D",
+        "dataset_path": "JXZhou0224/2DJigsaw",
+        "split": "test",
         "test_size": 50,
         "batch_size": 1,
-        "draw_grid": True,
-        "use_prompt": "default"
+        "draw_grid": False,
+
     }
-    dataloader_name = "JigsawR1"
+    task_cfg = {
+        "task_class": "solve_jigsaw",
+        "jigsaw_h": 2,
+        "jigsaw_w": 2,
+        "use_prompt": "thinking",
+        "use_thinking": True,
+        "use_tool": True,
+        "index_type": "1d"
+    }
     model_cfg = {
         "model_class":"qwen2.5-vl",
         "model_name": "Qwen/Qwen2.5-VL-3B-Instruct",

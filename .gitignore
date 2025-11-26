@@ -1,5 +1,5 @@
-data/patch_jigsaw/
-data/patch_jigsaw_data
+data/*
+2DJigsaw
 log
 result
 .github

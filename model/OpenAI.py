@@ -2,6 +2,7 @@ from openai import OpenAI
 from .BaseModel import BaseModel, ModelFactory
 import base64, io
 from PIL import Image
+import json
 
 @ModelFactory.register("openai")
 class Openai(BaseModel):
@@ -12,6 +13,7 @@ class Openai(BaseModel):
 
     def _encode_image(self, img: Image.Image) -> str:
         buf = io.BytesIO()
+        img.save(open("temp.png","wb"))
         img.save(buf, format="PNG")
         return "data:image/png;base64,"+base64.b64encode(buf.getvalue()).decode('utf-8')
 
@@ -19,19 +21,47 @@ class Openai(BaseModel):
         out = []
         for part in msg["content"]:
             if part["type"] == "text":
-                out.append({"type": "text", "text": part["text"]})
+                out.append({"type": "input_text", "text": part["text"]})
             elif part["type"] == "image":
-                out.append({"type": "image_url", "image_url": {"url": self._encode_image(part["image"])}})
+                out.append({"type": "input_image", "image_url": self._encode_image(part["image"])})
         return {"role": msg["role"], "content": out}
 
-    def generate(self, messages_batch):
+    def generate(self, inputs_batch):
         results = []
-        for messages in messages_batch:
-            formatted = [self._convert_message(m) for m in messages]
-            resp = self.client.chat.completions.create(
-                model=self.model_name,
-                messages=formatted,
-                temperature=self.temperature
-            )
-            results.append(resp.choices[0].message.content)
+        for case in inputs_batch:
+            if("tools" not in case):
+                formatted = [self._convert_message(m) for m in case["message"]]
+                resp = self.client.responses.create(
+                    model=self.model_name,
+                    input=formatted,
+                    temperature=self.temperature
+                )
+                results.append(resp.output[0].content[0].text)
+                print("Response:", resp.output[0].content[0].text)
+            else:
+                history = [self._convert_message(m) for m in case["message"]]
+                while True:
+                    log = []
+                    resp = self.client.responses.create(
+                        model=self.model_name,
+                        input=history,
+                        tools=case["tools"]
+                    )
+                    history+=resp.output
+                    for item in resp.output:
+                        if item.type == "function_call":
+                            print("Function call:", item.name, item.arguments)
+                            output = case["tool_map"][item.name](**json.loads(item.arguments))
+                            log.append(item.arguments)
+                            history.append({
+                                "type": "function_call_output",
+                                "call_id": item.call_id,
+                                "output": json.dumps({
+                                item.name: output
+                                })
+                            })
+                    if all(item.type != "function_call" for item in resp.output):
+                        res = "\n".join(log)
+                        results.append(res)
+                        break
         return results

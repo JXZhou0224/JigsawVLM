@@ -1,5 +1,5 @@
 class BaseModel:
-    def generate(self,messages):
+    def generate(self,messages,tools=None,func_dict=None):
         pass
 
 class ModelFactory:   

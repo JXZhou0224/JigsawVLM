@@ -1,5 +1,6 @@
 from config import DefaultConfig, LocalConfig,CustomConfig
-from dataloader import JigsawR1
+from dataloader import Jigsaw2D
+from task import BaseTask, TaskFactory
 from model import ModelFactory,BaseModel
 from utils import load_jsonl,dump_jsonl
 
@@ -37,11 +38,13 @@ if __name__ == "__main__":
         assert file.endswith(".json"),"config must be a json, or select from existing configs"
         config=CustomConfig.load_from_dict(json.load(open(file,"r")))
     dataloader = None
-    if config.dataloader_name == "JigsawR1":
-        dataloader = JigsawR1(**config.data_cfg)
+    if config.data_cfg["data_class"] == "Jigsaw2D":
+        dataloader = Jigsaw2D(**config.data_cfg)
     else:
         raise Exception("data not supported")
     
+    task = TaskFactory.get_task(**config.task_cfg)
+
     model = ModelFactory.get_llm(**config.model_cfg)
     if args.overwrite and args.continue_run:
         raise Exception("only one of the --overwrite and --continue_run should be used")
@@ -62,11 +65,12 @@ if __name__ == "__main__":
     config.to_json(str(save_dir)+"/config.json")
 
     print("starting at case: ",processed_len)
-    for sample in tqdm(dataloader): 
+    for samples in tqdm(dataloader): 
         if cnt < processed_len:
-            cnt += len(sample)
+            cnt += len(samples)
             continue
-        completions = model.generate([ins["message"] for ins in sample])
-        logs = dataloader.check(sample,completions)
+        inputs = task.format_inputs(samples)
+        completions = model.generate(inputs)
+        logs = task.check(inputs,completions)
         dump_jsonl(logs,res_dir,"a")
-        cnt += len(sample)
+        cnt += len(samples)
